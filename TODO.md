@@ -1,0 +1,3 @@
+- [ ] Change intro background image from 'img/introbackground2.png' to 'img/introbackground3.gif' in main.py
+- [ ] Verify that the image scales to full screen without borders
+- [ ] Test the main menu display

@@ -618,7 +618,6 @@ class Attack(pygame.sprite.Sprite):
     def animate(self):
         direction = self.game.player.facing
 
-
         if direction == 'up':
             self.image = self.up_animations[math.floor(self.animation_loop)]
             self.animation_loop += 0.5
@@ -762,3 +761,77 @@ class TreasureChest(pygame.sprite.Sprite):
         # Add all items to player's inventory
         for item in self.contents:
             self.game.inventory.add_item(item)
+
+class QuestionBarrier(pygame.sprite.Sprite):
+    """Interactive barrier that opens when player answers riddle correctly"""
+    def __init__(self, game, x, y):
+        self.game = game
+        self._layer = BLOCK_LAYER
+        self.groups = self.game.all_sprites
+        pygame.sprite.Sprite.__init__(self, self.groups)
+
+        self.x = x * TILESIZE
+        self.y = y * TILESIZE
+        self.width = TILESIZE
+        self.height = TILESIZE
+
+        # Use a distinct sprite for barrier (different from block)
+        self.image = self.game.terrain_spritesheet.get_sprite(64, 352, self.width, self.height)  # Use ground sprite but make it visible
+        # Add a colored overlay to make it distinct
+        overlay = pygame.Surface((self.width, self.height))
+        overlay.fill((255, 255, 0, 100))  # Semi-transparent yellow overlay
+        self.image.blit(overlay, (0, 0))
+
+        self.rect = self.image.get_rect()
+        self.rect.x = self.x
+        self.rect.y = self.y
+
+        # Barrier state
+        self.is_open = False
+        self.interaction_range = 50  # pixels
+
+        # Question data from config
+        self.question = QUESTION_TEXT
+        self.options = QUESTION_OPTIONS
+        self.correct_answer = CORRECT_ANSWER  # Index of correct answer
+
+    def update(self):
+        """Check for player interaction and manage barrier state"""
+        if not self.is_open:
+            # Add to blocks if not already
+            if self not in self.game.blocks:
+                self.game.blocks.add(self)
+
+            # Check if player is nearby and presses E
+            player_distance = math.sqrt(
+                (self.game.player.rect.centerx - self.rect.centerx)**2 +
+                (self.game.player.rect.centery - self.rect.centery)**2
+            )
+
+            if player_distance <= self.interaction_range:
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_e]:
+                    self.show_question()
+        else:
+            # Remove from blocks if open
+            if self in self.game.blocks:
+                self.game.blocks.remove(self)
+
+    def show_question(self):
+        """Show the question UI"""
+        self.game.show_question_ui = True
+        self.game.question_barrier = self
+        self.game.selected_option = 0
+
+    def select_option(self, option_index):
+        """Handle option selection"""
+        if option_index == self.correct_answer:
+            self.is_open = True
+            # Remove from blocks to allow passage
+            if self in self.game.blocks:
+                self.game.blocks.remove(self)
+            # Change appearance to indicate it's open (optional)
+            self.image = self.game.terrain_spritesheet.get_sprite(64, 352, self.width, self.height)  # Use ground sprite to indicate open
+        else:
+            # Wrong answer - could add penalty here if desired
+            pass

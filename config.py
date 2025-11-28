@@ -16,8 +16,12 @@ ENEMY_SPEED = 2
 RED = (255, 0, 0)
 BLACK = (0, 0, 0)
 BLUE = (0, 0, 255)
+LIGHT_BLUE = (173, 216, 230)
+AZURE_BLUE = (240, 248, 255)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
+GRAY = (128, 128, 128)
+YELLOW = (255, 255, 0)
 
 
 MAX_HP = 6
@@ -68,13 +72,35 @@ TREASURE_UI_BG_COLOR = (139, 69, 19, 220)  # Brown color for treasure chest UI
 TREASURE_UI_BORDER_COLOR = (255, 215, 0)    # Gold border
 TREASURE_UI_TEXT_COLOR = (255, 255, 255)    # White text
 
+# In-Game Menu Constants
+MENU_BG_COLOR = (0, 0, 0, 180)  # Semi-transparent black
+MENU_TEXT_COLOR = (255, 255, 255)  # White text
+MENU_BUTTON_COLOR = (100, 100, 100)  # Gray buttons
+MENU_BUTTON_HOVER_COLOR = (150, 150, 150)  # Lighter gray on hover
+MENU_BUTTON_WIDTH = 450
+MENU_BUTTON_HEIGHT = 50
+MENU_BUTTON_SPACING = 20
+MENU_TITLE_FONT_SIZE = 24
+MENU_BUTTON_FONT_SIZE = 16
+
+# Question Barrier Constants
+QUESTION_TEXT = "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?"
+QUESTION_OPTIONS = ["a. A ghost", "b. An echo", "c. A whistle", "d. A shadow"]
+CORRECT_ANSWER = 1  # Index of correct answer (0-based)
+QUESTION_UI_WIDTH = 600
+QUESTION_UI_HEIGHT = 400
+QUESTION_UI_BG_COLOR = (50, 50, 50, 220)  # Semi-transparent dark gray
+QUESTION_UI_TEXT_COLOR = (255, 255, 255)  # White text
+QUESTION_UI_OPTION_COLOR = (200, 200, 200)  # Light gray for options
+QUESTION_UI_SELECTED_COLOR = (255, 255, 0)  # Yellow for selected option
+
 tilemap = [
     'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-    'B.........B..............D............B...............B...............B.................B....E.B',
-    'B.P.......B....E....D........D........B...............B.....B.........B.................B...T..B',
+    'B.........B..............D............B...............B...............B.................B....Q.B',
+    'B.P.......B....E....D........D........B...............B.....B.........B.......E.........B...T..B',
     'B.........B................B..........................B.....B.........B.................B.E....B',
     'B..BBBBB..B......B..BBBBBBBB..........................BBBBBBB.........B.................B....E.B',
-    'B.....B...B......B.........BBBBBBBBBBBBBBB.......................B.........................BBBBB',
+    'B.....B...B......B.........BBBBBBBBBBBBBBB.......E...............B.........................BBBBB',
     'B.....B...G..D...B.........B.............B.......................B..........B..................B',
     'BBBBBBBB..G......B.......................B.......................B..........BBBBBBBBBBBBGGGGGGGB',
     'B.........BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGGGGGBBBBBBBBBBBBBBBBBBBBB........B..................B',
